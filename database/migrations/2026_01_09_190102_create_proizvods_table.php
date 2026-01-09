@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('naziv', 150);
             $table->text('opis');
             $table->decimal('cena', 8, 2);
-            $table->integer('stanje');
+            $table->string('stanje');
             $table->foreignId('kategorija_id')->constrained();
             $table->timestamps();
         });

@@ -15,15 +15,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('kategorijas', App\Http\Controllers\KategorijaController::class);
+    Route::resource('proizvods', App\Http\Controllers\ProizvodController::class);
+    Route::resource('narudzbinas', App\Http\Controllers\NarudzbinaController::class);
+    Route::resource('stavka-narudzbines', App\Http\Controllers\StavkaNarudzbineController::class);
+    
 });
 
 require __DIR__.'/auth.php';
-
-
-Route::resource('kategorijas', App\Http\Controllers\KategorijaController::class);
-
-Route::resource('proizvods', App\Http\Controllers\ProizvodController::class);
-
-Route::resource('narudzbinas', App\Http\Controllers\NarudzbinaController::class);
-
-Route::resource('stavka-narudzbines', App\Http\Controllers\StavkaNarudzbineController::class);

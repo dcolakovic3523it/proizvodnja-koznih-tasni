@@ -30,4 +30,8 @@ class Kategorija extends Model
             'id' => 'integer',
         ];
     }
+
+    public function proizvodi() {
+        return $this->hasMany(Proizvod::class);
+    }
 }

@@ -39,4 +39,8 @@ class Narudzbina extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function stavke() {
+        return $this->hasMany(StavkaNarudzbine::class);
+    }
 }

@@ -45,4 +45,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function narudzbine() {
+        return $this->hasMany(Narudzbina::class);
+    }
 }
