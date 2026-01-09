@@ -1,2 +1,53 @@
+created:
+    - app/Http/Controllers/KategorijaController.php
+    - app/Http/Controllers/ProizvodController.php
+    - app/Http/Controllers/NarudzbinaController.php
+    - app/Http/Controllers/StavkaNarudzbineController.php
+    - database/factories/KategorijaFactory.php
+    - database/factories/ProizvodFactory.php
+    - database/factories/NarudzbinaFactory.php
+    - database/factories/StavkaNarudzbineFactory.php
+    - database/migrations/2026_01_09_190101_create_kategorijas_table.php
+    - database/migrations/2026_01_09_190102_create_proizvods_table.php
+    - database/migrations/2026_01_09_190103_create_narudzbinas_table.php
+    - database/migrations/2026_01_09_190104_create_stavka_narudzbines_table.php
+    - app/Models/Kategorija.php
+    - app/Models/Proizvod.php
+    - app/Models/Narudzbina.php
+    - app/Models/StavkaNarudzbine.php
+    - tests/Feature/Http/Controllers/KategorijaControllerTest.php
+    - tests/Feature/Http/Controllers/ProizvodControllerTest.php
+    - tests/Feature/Http/Controllers/NarudzbinaControllerTest.php
+    - tests/Feature/Http/Controllers/StavkaNarudzbineControllerTest.php
+    - app/Http/Requests/KategorijaStoreRequest.php
+    - app/Http/Requests/KategorijaUpdateRequest.php
+    - app/Http/Requests/ProizvodStoreRequest.php
+    - app/Http/Requests/ProizvodUpdateRequest.php
+    - app/Http/Requests/NarudzbinaStoreRequest.php
+    - app/Http/Requests/NarudzbinaUpdateRequest.php
+    - app/Http/Requests/StavkaNarudzbineStoreRequest.php
+    - app/Http/Requests/StavkaNarudzbineUpdateRequest.php
+    - resources/views/kategorija/index.blade.php
+    - resources/views/kategorija/create.blade.php
+    - resources/views/kategorija/show.blade.php
+    - resources/views/kategorija/edit.blade.php
+    - resources/views/proizvod/index.blade.php
+    - resources/views/proizvod/create.blade.php
+    - resources/views/proizvod/show.blade.php
+    - resources/views/proizvod/edit.blade.php
+    - resources/views/narudzbina/index.blade.php
+    - resources/views/narudzbina/create.blade.php
+    - resources/views/narudzbina/show.blade.php
+    - resources/views/narudzbina/edit.blade.php
+    - resources/views/stavkaNarudzbine/index.blade.php
+    - resources/views/stavkaNarudzbine/create.blade.php
+    - resources/views/stavkaNarudzbine/show.blade.php
+    - resources/views/stavkaNarudzbine/edit.blade.php
+updated:
+    - routes/web.php
 models:
     User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, remember_token: 'string:100 nullable default:NULL' }
+    Kategorija: { naziv: 'string:100', opis: text }
+    Proizvod: { naziv: 'string:150', opis: text, cena: 'decimal:8,2', stanje: integer, kategorija_id: 'id foreign:Kategorija' }
+    Narudzbina: { user_id: 'id foreign:User', ukupna_cena: 'decimal:8,2', status: 'string:50' }
+    StavkaNarudzbine: { proizvod_id: 'id foreign:Proizvod', narudzbina_id: 'id foreign:Narudzbina', kolicina: integer, cena: 'decimal:8,2' }

@@ -18,3 +18,12 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+Route::resource('kategorijas', App\Http\Controllers\KategorijaController::class);
+
+Route::resource('proizvods', App\Http\Controllers\ProizvodController::class);
+
+Route::resource('narudzbinas', App\Http\Controllers\NarudzbinaController::class);
+
+Route::resource('stavka-narudzbines', App\Http\Controllers\StavkaNarudzbineController::class);

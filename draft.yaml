@@ -1,5 +1,35 @@
 models:
-  # ...
+  Kategorija:
+    naziv: string:100
+    opis: text
+
+  Proizvod:
+    naziv: string:150
+    opis: text
+    cena: decimal:8,2
+    stanje: integer
+    kategorija_id: id foreign:Kategorija
+
+  Narudzbina:
+    user_id: id foreign:User
+    ukupna_cena: decimal:8,2
+    status: string:50
+
+  StavkaNarudzbine:
+    proizvod_id: id foreign:Proizvod
+    narudzbina_id: id foreign:Narudzbina
+    kolicina: integer
+    cena: decimal:8,2
 
 controllers:
-  # ...
+  Kategorija:
+    resource
+
+  Proizvod:
+    resource
+  
+  Narudzbina:
+    resource
+
+  StavkaNarudzbine:
+    resource
