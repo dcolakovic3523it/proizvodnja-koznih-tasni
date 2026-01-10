@@ -11,7 +11,8 @@ use Illuminate\View\View;
 
 class KategorijaController extends Controller
 {
-    public function index(Request $request): Response
+    // Lista kategorija
+    public function index(Request $request): View
     {
         $kategorijas = Kategorija::all();
 
@@ -20,47 +21,46 @@ class KategorijaController extends Controller
         ]);
     }
 
-    public function create(Request $request): Response
+    // Dodavanje
+    public function create(Request $request): View
     {
         return view('kategorija.create');
     }
 
-    public function store(KategorijaStoreRequest $request): Response
+    // Cuvanje
+    public function store(KategorijaStoreRequest $request): RedirectResponse
     {
-        $kategorija = Kategorija::create($request->validated());
-
-        $request->session()->flash('kategorija.id', $kategorija->id);
-
-        return redirect()->route('kategorijas.index');
+        Kategorija::create($request->validated());
+        return redirect()->route('kategorijas.index')->with('success', 'Kategorija je uspešno dodata.');
     }
 
-    public function show(Request $request, Kategorija $kategorija): Response
+    // Jedna kategorija
+    public function show(Request $request, Kategorija $kategorija): View
     {
         return view('kategorija.show', [
             'kategorija' => $kategorija,
         ]);
     }
 
-    public function edit(Request $request, Kategorija $kategorija): Response
+    // Izmena
+    public function edit(Request $request, Kategorija $kategorija): View
     {
         return view('kategorija.edit', [
             'kategorija' => $kategorija,
         ]);
     }
 
-    public function update(KategorijaUpdateRequest $request, Kategorija $kategorija): Response
+    // Azuriranje
+    public function update(KategorijaUpdateRequest $request, Kategorija $kategorija): RedirectResponse
     {
         $kategorija->update($request->validated());
-
-        $request->session()->flash('kategorija.id', $kategorija->id);
-
-        return redirect()->route('kategorijas.index');
+        return redirect()->route('kategorijas.index')->with('success', 'Kategorija je uspešno izmenjena.');
     }
 
-    public function destroy(Request $request, Kategorija $kategorija): Response
+    // Brisanje
+    public function destroy(Request $request, Kategorija $kategorija): RedirectResponse
     {
         $kategorija->delete();
-
-        return redirect()->route('kategorijas.index');
+        return redirect()->route('kategorijas.index')->with('success', 'Kategorija je uspešno obrisana.');
     }
 }

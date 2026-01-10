@@ -11,7 +11,9 @@ use Illuminate\View\View;
 
 class ProizvodController extends Controller
 {
-    public function index(Request $request): Response
+
+    // Katalog
+    public function index(Request $request): View
     {
         $proizvods = Proizvod::all();
 
@@ -20,47 +22,46 @@ class ProizvodController extends Controller
         ]);
     }
 
-    public function create(Request $request): Response
+    // Dodavanje proizvoda
+    public function create(Request $request): View
     {
         return view('proizvod.create');
     }
 
-    public function store(ProizvodStoreRequest $request): Response
+    // Cuvanje u bazu
+    public function store(ProizvodStoreRequest $request): RedirectResponse
     {
-        $proizvod = Proizvod::create($request->validated());
-
-        $request->session()->flash('proizvod.id', $proizvod->id);
-
-        return redirect()->route('proizvods.index');
+        Proizvod::create($request->validated());
+        return redirect()->route('proizvods.index')->with('success', 'Proizvod je uspešno dodat.');
     }
 
-    public function show(Request $request, Proizvod $proizvod): Response
+    // Jedan proizvod
+    public function show(Request $request, Proizvod $proizvod): View
     {
         return view('proizvod.show', [
             'proizvod' => $proizvod,
         ]);
     }
 
-    public function edit(Request $request, Proizvod $proizvod): Response
+    // Izmena
+    public function edit(Request $request, Proizvod $proizvod): View
     {
         return view('proizvod.edit', [
             'proizvod' => $proizvod,
         ]);
     }
 
-    public function update(ProizvodUpdateRequest $request, Proizvod $proizvod): Response
+    // Azuriranje
+    public function update(ProizvodUpdateRequest $request, Proizvod $proizvod): RedirectResponse
     {
         $proizvod->update($request->validated());
-
-        $request->session()->flash('proizvod.id', $proizvod->id);
-
-        return redirect()->route('proizvods.index');
+        return redirect()->route('proizvods.index')->with('success', 'Proizvod je uspešno izmenjen.');
     }
 
-    public function destroy(Request $request, Proizvod $proizvod): Response
+    // Brisanje
+    public function destroy(Request $request, Proizvod $proizvod): RedirectResponse
     {
         $proizvod->delete();
-
-        return redirect()->route('proizvods.index');
+        return redirect()->route('proizvods.index')->with('success', 'Proizvod je uspešno obrisan.');
     }
 }

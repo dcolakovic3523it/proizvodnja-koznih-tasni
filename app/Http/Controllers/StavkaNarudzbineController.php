@@ -11,7 +11,8 @@ use Illuminate\View\View;
 
 class StavkaNarudzbineController extends Controller
 {
-    public function index(Request $request): Response
+    // Lista stavki
+    public function index(Request $request): View
     {
         $stavkaNarudzbines = StavkaNarudzbine::all();
 
@@ -20,47 +21,46 @@ class StavkaNarudzbineController extends Controller
         ]);
     }
 
-    public function create(Request $request): Response
+    // Dodavanje
+    public function create(Request $request): View
     {
         return view('stavkaNarudzbine.create');
     }
 
-    public function store(StavkaNarudzbineStoreRequest $request): Response
+    // Cuvanje
+    public function store(StavkaNarudzbineStoreRequest $request): RedirectResponse
     {
-        $stavkaNarudzbine = StavkaNarudzbine::create($request->validated());
-
-        $request->session()->flash('stavkaNarudzbine.id', $stavkaNarudzbine->id);
-
-        return redirect()->route('stavkaNarudzbines.index');
+        StavkaNarudzbine::create($request->validated());
+        return redirect()->route('stavkaNarudzbines.index')->with('success', 'Stavka je uspešno sačuvana.');
     }
 
-    public function show(Request $request, StavkaNarudzbine $stavkaNarudzbine): Response
+    // Jedna stavka
+    public function show(Request $request, StavkaNarudzbine $stavkaNarudzbine): View
     {
         return view('stavkaNarudzbine.show', [
             'stavkaNarudzbine' => $stavkaNarudzbine,
         ]);
     }
 
-    public function edit(Request $request, StavkaNarudzbine $stavkaNarudzbine): Response
+    // Izmena
+    public function edit(Request $request, StavkaNarudzbine $stavkaNarudzbine): View
     {
         return view('stavkaNarudzbine.edit', [
             'stavkaNarudzbine' => $stavkaNarudzbine,
         ]);
     }
 
-    public function update(StavkaNarudzbineUpdateRequest $request, StavkaNarudzbine $stavkaNarudzbine): Response
+    // Azuriranje
+    public function update(StavkaNarudzbineUpdateRequest $request, StavkaNarudzbine $stavkaNarudzbine): RedirectResponse
     {
         $stavkaNarudzbine->update($request->validated());
-
-        $request->session()->flash('stavkaNarudzbine.id', $stavkaNarudzbine->id);
-
-        return redirect()->route('stavkaNarudzbines.index');
+        return redirect()->route('stavkaNarudzbines.index')->with('success', 'Stavka je uspešno izmenjena.');
     }
 
-    public function destroy(Request $request, StavkaNarudzbine $stavkaNarudzbine): Response
+    // Brisanje
+    public function destroy(Request $request, StavkaNarudzbine $stavkaNarudzbine): RedirectResponse
     {
         $stavkaNarudzbine->delete();
-
-        return redirect()->route('stavkaNarudzbines.index');
+        return redirect()->route('stavkaNarudzbines.index')->with('success', 'Stavka je uspešno izbrisana.');
     }
 }

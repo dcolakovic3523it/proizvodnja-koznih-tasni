@@ -8,10 +8,12 @@ use App\Models\Narudzbina;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class NarudzbinaController extends Controller
 {
-    public function index(Request $request): Response
+    // Lista
+    public function index(Request $request): View
     {
         $narudzbinas = Narudzbina::all();
 
@@ -20,47 +22,63 @@ class NarudzbinaController extends Controller
         ]);
     }
 
-    public function create(Request $request): Response
+    // Dodavanje
+    public function create(Request $request): View
     {
         return view('narudzbina.create');
     }
 
-    public function store(NarudzbinaStoreRequest $request): Response
+    // Use case - kreiranje narudžbine
+    public function store(NarudzbinaStoreRequest $request): RedirectResponse
     {
-        $narudzbina = Narudzbina::create($request->validated());
+        $narudzbina = Narudzbina::create([
+            'user_id' => Auth::id(),
+            'status' => 'Kreirana.',
+        ]);
 
-        $request->session()->flash('narudzbina.id', $narudzbina->id);
-
-        return redirect()->route('narudzbinas.index');
+        return redirect()->route('narudzbinas.index')->with('success', 'Narudžbina je uspešno kreirana.');
     }
 
-    public function show(Request $request, Narudzbina $narudzbina): Response
+    // Jedna narudzbina
+    public function show(Request $request, Narudzbina $narudzbina): View
     {
         return view('narudzbina.show', [
             'narudzbina' => $narudzbina,
         ]);
     }
 
-    public function edit(Request $request, Narudzbina $narudzbina): Response
+    // Izmena 
+    public function edit(Request $request, Narudzbina $narudzbina): View
     {
         return view('narudzbina.edit', [
             'narudzbina' => $narudzbina,
         ]);
     }
 
-    public function update(NarudzbinaUpdateRequest $request, Narudzbina $narudzbina): Response
+    // Azuriranje
+    public function update(NarudzbinaUpdateRequest $request, Narudzbina $narudzbina): RedirectResponse
     {
         $narudzbina->update($request->validated());
-
-        $request->session()->flash('narudzbina.id', $narudzbina->id);
-
-        return redirect()->route('narudzbinas.index');
+        return redirect()->route('narudzbinas.index')->with('success', 'Narudžbina je uspešno izmenjena.');
     }
 
-    public function destroy(Request $request, Narudzbina $narudzbina): Response
+    // Brisanje
+    public function destroy(Request $request, Narudzbina $narudzbina): RedirectResponse
     {
         $narudzbina->delete();
+        return redirect()->route('narudzbinas.index')->with('success', 'Narudžbina je uspešno izbrisana.');
+    }
 
-        return redirect()->route('narudzbinas.index');
+    // Use case - prikaz narudzbine prijavljenog korisnika
+    public function mojeNarudzbine(): View
+    {
+        $narudzbinas = Narudzbina::where(
+            'user_id',
+            Auth::id()
+        )->get();
+
+        return view('narudzbina.moja', [
+            'narudzbinas' => $narudzbinas,
+        ]);
     }
 }
