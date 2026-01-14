@@ -19,6 +19,9 @@ class Narudzbina extends Model
         'user_id',
         'ukupna_cena',
         'status',
+        'full_name',
+        'address',
+        'phone'
     ];
 
     /**

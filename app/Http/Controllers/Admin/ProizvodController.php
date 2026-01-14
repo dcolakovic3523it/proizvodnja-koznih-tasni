@@ -43,7 +43,7 @@ class ProizvodController extends Controller
         }
 
         Proizvod::create($data);
-        return redirect()->route('admin.proizvodi.index')->with('success', 'Proizvod je dodat');
+        return redirect()->route('admin.proizvodi.index')->with('success', 'Proizvod je uspešno dodat.');
     }
 
     // Izmena
@@ -68,14 +68,14 @@ class ProizvodController extends Controller
         $data = $request->all();
 
         $proizvod->update($data);
-        return redirect()->route('admin.proizvodi.index')->with('success', 'Proizvod je izmenjen.');
+        return redirect()->route('admin.proizvodi.index')->with('success', 'Proizvod je uspešno izmenjen.');
     }
 
     // Brisanje
     public function destroy(Proizvod $proizvod)
     {
         $proizvod->delete();
-        return redirect()->route('admin.proizvodi.index')->with('success', 'Uspesno obrisan proizvod.');
+        return redirect()->route('admin.proizvodi.index')->with('success', 'Proizvod je uspešno obrisan.');
     }
 
 

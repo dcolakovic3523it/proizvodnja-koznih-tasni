@@ -15,7 +15,7 @@ class NarudzbinaController extends Controller
     // Lista
     public function index(Request $request): View
     {
-        $narudzbinas = Narudzbina::where('user_id', Auth::id())->latest()->get();
+        $narudzbinas = Narudzbina::where('user_id', Auth::id())->get();
 
         return view('narudzbina.index', [
             'narudzbinas' => $narudzbinas,
@@ -26,14 +26,13 @@ class NarudzbinaController extends Controller
     public function create()
     {
         $korpa = session('korpa', []);
-        return view('narudzbina.create', compact ('korpa'));
+        return view('narudzbina.create', compact('korpa'));
     }
 
-    // Use case - kreiranje narudžbine
-    public function store (NarudzbinaStoreRequest $request) : RedirectResponse
+    // Use case - kreiranje narudzbine
+    public function store (NarudzbinaStoreRequest $request): RedirectResponse
     {
         $korpa = session('korpa', []);
-
         if(empty($korpa)) {
             return redirect()->back()->with('error', 'Korpa je prazna.');
         }
@@ -66,19 +65,14 @@ class NarudzbinaController extends Controller
 
         // Ciscenje korpe
         session()->forget('korpa');
-        return redirect()->route('narudzbinas.index')->with('success', 'Narudzbina je uspesno kreirana!');
+        return redirect()->route('narudzbinas.index')->with('success', 'Narudžbina je uspešno kreirana.');
     }
-
 
     // Jedna narudzbina
     public function show(Request $request, Narudzbina $narudzbina): View
     {
-        if($narudzbina->user_id !== Auth::id()) {
-            abort(403); // sigurnosna provera
-        }
-
         return view('narudzbina.show', [
-            'narudzbina' => $narudzbina,
+            'narudzbina' => $narudzbina
         ]);
     }
 
