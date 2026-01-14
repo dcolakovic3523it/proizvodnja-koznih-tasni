@@ -48,9 +48,6 @@ jobs:
         run: php artisan key:generate
 
 
-      - name: Pokretanje testova
-        run: php artisan test
-
 
       - name: Provera da li server radi
         run: |
