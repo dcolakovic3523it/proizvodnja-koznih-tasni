@@ -15,7 +15,7 @@ class NarudzbinaController extends Controller
     // Lista
     public function index(Request $request): View
     {
-        $narudzbinas = Narudzbina::all();
+        $narudzbinas = Narudzbina::where('user_id', Auth::id())->latest()->get();
 
         return view('narudzbina.index', [
             'narudzbinas' => $narudzbinas,
@@ -23,25 +23,60 @@ class NarudzbinaController extends Controller
     }
 
     // Dodavanje
-    public function create(Request $request): View
+    public function create()
     {
-        return view('narudzbina.create');
+        $korpa = session('korpa', []);
+        return view('narudzbina.create', compact ('korpa'));
     }
 
     // Use case - kreiranje narudžbine
-    public function store(NarudzbinaStoreRequest $request): RedirectResponse
+    public function store (NarudzbinaStoreRequest $request) : RedirectResponse
     {
+        $korpa = session('korpa', []);
+
+        if(empty($korpa)) {
+            return redirect()->back()->with('error', 'Korpa je prazna.');
+        }
+
+        $ukupno = 0;
+        foreach($korpa as $stavka) {
+            $ukupno += $stavka['cena'] * $stavka['kolicina'];
+        }
+
+        // Kreiranje narudzbine
         $narudzbina = Narudzbina::create([
             'user_id' => Auth::id(),
-            'status' => 'Kreirana.',
+            'status' => 'Na cekanju',
+            'ukupna_cena' => $ukupno,
+            'full_name' => $request->full_name ?? '',
+            'address' => $request->address ?? '',
+            'phone' => $request->phone ?? '',
         ]);
 
-        return redirect()->route('narudzbinas.index')->with('success', 'Narudžbina je uspešno kreirana.');
+        // Dodavanje stavki
+        foreach($korpa as $proizvodId => $stavka) {
+            $narudzbina->stavke()->create([
+                'proizvod_id' => $proizvodId,
+                'naziv' => $stavka['naziv'],
+                'cena' => $stavka['cena'],
+                'slika' => $stavka['slika'] ?? null,
+                'kolicina' => $stavka['kolicina'],
+            ]);
+        }
+
+        // Ciscenje korpe
+        session()->forget('korpa');
+        return redirect()->route('narudzbinas.index')->with('success', 'Narudzbina je uspesno kreirana!');
     }
+
 
     // Jedna narudzbina
     public function show(Request $request, Narudzbina $narudzbina): View
     {
+        if($narudzbina->user_id !== Auth::id()) {
+            abort(403); // sigurnosna provera
+        }
+
         return view('narudzbina.show', [
             'narudzbina' => $narudzbina,
         ]);
@@ -69,16 +104,4 @@ class NarudzbinaController extends Controller
         return redirect()->route('narudzbinas.index')->with('success', 'Narudžbina je uspešno izbrisana.');
     }
 
-    // Use case - prikaz narudzbine prijavljenog korisnika
-    public function mojeNarudzbine(): View
-    {
-        $narudzbinas = Narudzbina::where(
-            'user_id',
-            Auth::id()
-        )->get();
-
-        return view('narudzbina.moja', [
-            'narudzbinas' => $narudzbinas,
-        ]);
-    }
 }

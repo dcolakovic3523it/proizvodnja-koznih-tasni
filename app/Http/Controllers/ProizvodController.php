@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProizvodStoreRequest;
 use App\Http\Requests\ProizvodUpdateRequest;
 use App\Models\Proizvod;
+use App\Models\Kategorija;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -12,7 +13,7 @@ use Illuminate\View\View;
 class ProizvodController extends Controller
 {
 
-    // Katalog
+    // Katalog - use case
     public function index(Request $request): View
     {
         $proizvods = Proizvod::all();
@@ -64,4 +65,6 @@ class ProizvodController extends Controller
         $proizvod->delete();
         return redirect()->route('proizvods.index')->with('success', 'Proizvod je uspešno obrisan.');
     }
+
+    
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kategorija extends Model
 {
     use HasFactory;
+    protected $table = 'kategorijas';
 
     /**
      * The attributes that are mass assignable.

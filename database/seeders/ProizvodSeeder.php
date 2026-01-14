@@ -14,98 +14,29 @@ class ProizvodSeeder extends Seeder
     public function run(): void
     {
         Proizvod::create([
-            "naziv" => "Braon kožna tasna",
+            "naziv" => "Braon kožna tašna",
             "opis" => "Poslovna tašna od vrhunskog kvaliteta.",
             "cena" => 25000.00,
             "stanje" => "Na stanju.",
+            "slika" => "slika1.png", 
             "kategorija_id" => 1
         ]);
 
         Proizvod::create([
-            "naziv" => "Bordo kožna tasna",
-            "opis" => "Poslovna tašna od vrhunskog kvaliteta.",
-            "cena" => 25000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 1
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Bež kožna tasna",
-            "opis" => "Poslovna tašna od vrhunskog kvaliteta.",
-            "cena" => 25000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 1
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Kamel kožna tasna",
-            "opis" => "Poslovna tašna od vrhunskog kvaliteta.",
-            "cena" => 25000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 1
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Bordo kožna tasna",
+            "naziv" => "Bordo kožna tašna",
             "opis" => "Elegantna tašna od vrhunskog kvaliteta.",
             "cena" => 15000.00,
             "stanje" => "Na stanju.",
+            "slika" => "slika2.png", 
             "kategorija_id" => 2
         ]);
 
         Proizvod::create([
-            "naziv" => "Kamel kožna tasna",
-            "opis" => "Poslovna tašna od vrhunskog kvaliteta.",
-            "cena" => 30000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 1
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Zelena kožna tasna",
-            "opis" => "Poslovna tašna od vrhunskog kvaliteta.",
-            "cena" => 25000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 1
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Crna kožna tasna",
+            "naziv" => "Bež kožna tašna",
             "opis" => "Svakodnevna tašna od vrhunskog kvaliteta.",
             "cena" => 18000.00,
             "stanje" => "Na stanju.",
-            "kategorija_id" => 3
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Braon kožna tasna",
-            "opis" => "Elegantna tašna od vrhunskog kvaliteta.",
-            "cena" => 15000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 2
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Bordo kožna tasna",
-            "opis" => "Elegantna tašna od vrhunskog kvaliteta.",
-            "cena" => 15000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 2
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Bež kožna tasna",
-            "opis" => "Poslovna tašna od vrhunskog kvaliteta.",
-            "cena" => 25000.00,
-            "stanje" => "Na stanju.",
-            "kategorija_id" => 1
-        ]);
-
-        Proizvod::create([
-            "naziv" => "Crna kožna tasna",
-            "opis" => "Svakodnevna tašna od vrhunskog kvaliteta.",
-            "cena" => 10000.00,
-            "stanje" => "Na stanju.",
+            "slika" => "slika3.png", 
             "kategorija_id" => 3
         ]);
 

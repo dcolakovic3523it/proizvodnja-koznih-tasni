@@ -1,17 +1,55 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app') 
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+@section('title', 'Dashboard')
+
+@section('content')
+<div class="container py-5">
+    <h1 class="mb-4">Admin Dashboard</h1>
+
+    <div class="row g-4">
+
+        {{-- Proizvodi --}}
+        <div class="col-md-4">
+            <a href="{{ route('admin.proizvodi.index') }}" class="text-decoration-none">
+                <div class="card border-primary h-100">
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Proizvodi</h4>
+                        <p class="card-text">
+                            Pregled, dodavanje, izmena i brisanje proizvoda
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
+
+        {{-- Kategorije --}}
+        <div class="col-md-4">
+            <a href="#" class="text-decoration-none">
+                <div class="card border-success h-100">
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Kategorije</h4>
+                        <p class="card-text">
+                            Upravljanje kategorijama proizvoda
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        {{-- Narudžbine --}}
+        <div class="col-md-4">
+            <a href="#" class="text-decoration-none">
+                <div class="card border-warning h-100">
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Narudžbine</h4>
+                        <p class="card-text">
+                            Pregled i obrada narudžbina
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
     </div>
-</x-app-layout>
+</div>
+@endsection

@@ -10,6 +10,7 @@ class Proizvod extends Model
 {
     use HasFactory;
 
+    protected $table = 'proizvods';
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +21,7 @@ class Proizvod extends Model
         'opis',
         'cena',
         'stanje',
+        'slika',
         'kategorija_id',
     ];
 
@@ -39,7 +41,7 @@ class Proizvod extends Model
 
     public function kategorija(): BelongsTo
     {
-        return $this->belongsTo(Kategorija::class);
+        return $this->belongsTo(Kategorija::class, 'kategorija_id');
     }
 
     public function stavke() {
